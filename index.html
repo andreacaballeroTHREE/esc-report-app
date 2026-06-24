@@ -250,14 +250,20 @@ let currentPhotoData = null;
 let currentTimestamp = null;
 
 function saveToStorage(){
-  localStorage.setItem('esc_entries', JSON.stringify(entries));
-  localStorage.setItem('esc_form', JSON.stringify({
-    empresa: document.getElementById('empresa').value,
-    proj: document.getElementById('proj-name').value,
-    num: document.getElementById('report-num').value,
-    elab: document.getElementById('elaborado-por').value,
-    freq: document.getElementById('frecuencia').value,
-  }));
+  try{
+    localStorage.setItem('esc_entries', JSON.stringify(entries));
+    localStorage.setItem('esc_form', JSON.stringify({
+      empresa: document.getElementById('empresa').value,
+      proj: document.getElementById('proj-name').value,
+      num: document.getElementById('report-num').value,
+      elab: document.getElementById('elaborado-por').value,
+      freq: document.getElementById('frecuencia').value,
+    }));
+  }catch(err){
+    // Si se llega al límite de almacenamiento del navegador, no detenemos el flujo:
+    // la entrada sigue disponible en memoria durante esta sesión.
+    console.warn('No se pudo guardar en almacenamiento local (posible límite de espacio):', err);
+  }
 }
 
 function loadFromStorage(){
@@ -360,14 +366,38 @@ function handlePhoto(e){
   currentTimestamp = now;
   const pad = n=>String(n).padStart(2,'0');
   const tsText = `${pad(now.getDate())}/${pad(now.getMonth()+1)}/${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    currentPhotoData = ev.target.result;
+
+  const showPreview = (dataUrl) => {
+    currentPhotoData = dataUrl;
     document.getElementById('preview-img').src = currentPhotoData;
     document.getElementById('photo-preview').style.display='block';
     document.getElementById('ts-badge-text').textContent = '📅 ' + tsText;
     document.getElementById('photo-btn').innerHTML='<i class="ti ti-camera-rotate"></i>Cambiar foto';
     document.getElementById('notes-section').style.display='block';
+  };
+
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = new Image();
+    img.onload = () => {
+      // Redimensiona la foto (máx. 1280px en el lado largo) y la recomprime como JPEG.
+      // Esto reduce muchísimo el tamaño guardado por foto y evita llegar al límite de almacenamiento del navegador.
+      const MAX_DIM = 1280;
+      let w = img.width, h = img.height;
+      if(w >= h && w > MAX_DIM){ h = Math.round(h * MAX_DIM / w); w = MAX_DIM; }
+      else if(h > w && h > MAX_DIM){ w = Math.round(w * MAX_DIM / h); h = MAX_DIM; }
+      try{
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        showPreview(canvas.toDataURL('image/jpeg', 0.75));
+      }catch(err){
+        // Si por algún motivo falla la compresión, usa la foto original como respaldo.
+        showPreview(ev.target.result);
+      }
+    };
+    img.onerror = () => showPreview(ev.target.result);
+    img.src = ev.target.result;
   };
   reader.readAsDataURL(file);
   e.target.value='';
