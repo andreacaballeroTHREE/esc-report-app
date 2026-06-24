@@ -3,38 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ESC Report App · THREE</title>
+<title>ESC + IAQ Report App</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.0.0/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f2f0;color:#1a1a1a;min-height:100vh}
-.screen{display:none;padding:16px;max-width:480px;margin:0 auto;padding-bottom:40px}
+.screen{display:none;padding:16px;max-width:480px;margin:0 auto;padding-bottom:100px}
 .screen.active{display:block}
-.logo{font-size:12px;font-weight:600;color:#0F6E56;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px}
-h1{font-size:22px;font-weight:600;margin-bottom:1.5rem;line-height:1.3;color:#1a1a1a}
-h2{font-size:17px;font-weight:600;margin-bottom:1rem;color:#1a1a1a}
+h1{font-size:22px;font-weight:600;margin-bottom:4px;line-height:1.3}
+h2{font-size:17px;font-weight:600;margin-bottom:1rem}
 .card{background:#fff;border:1px solid #e5e7e5;border-radius:12px;padding:16px 18px;margin-bottom:12px}
 label{font-size:13px;color:#555;display:block;margin-bottom:4px;font-weight:500}
-input,select,textarea{width:100%;margin-bottom:14px;font-size:15px;padding:10px 12px;border:1px solid #d0d5d0;border-radius:8px;background:#fff;color:#1a1a1a;outline:none}
+input,select,textarea{width:100%;margin-bottom:14px;font-size:15px;padding:10px 12px;border:1px solid #d0d5d0;border-radius:8px;background:#fff;color:#1a1a1a;outline:none;font-family:inherit}
 input:focus,select:focus,textarea:focus{border-color:#1D9E75}
-textarea{height:72px;resize:none;font-family:inherit}
-.btn{width:100%;padding:13px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;border:none;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity 0.15s}
+textarea{height:72px;resize:none}
+.btn{width:100%;padding:13px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;border:none;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity 0.15s;font-family:inherit}
 .btn:active{opacity:0.8}
 .btn-primary{background:#1D9E75;color:#fff}
 .btn-secondary{background:#fff;color:#1a1a1a;border:1px solid #d0d5d0}
 .btn-danger{background:#fee2e2;color:#b91c1c}
 .btn+.btn{margin-top:8px}
-.concept-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem}
-.concept-btn{background:#fff;border:1px solid #e5e7e5;border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;font-size:12px;line-height:1.4;color:#1a1a1a;font-family:inherit}
-.concept-btn:active{background:#f0f2f0}
-.concept-btn i{display:block;font-size:24px;margin-bottom:6px;color:#1D9E75}
+/* Concept grid */
+.section-label{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin:16px 0 8px;padding:4px 10px;border-radius:6px;display:inline-block}
+.section-label.obligatorio{background:#EBF4FF;color:#1E40AF}
+.section-label.opcional{background:#f0f2f0;color:#555}
+.concept-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px}
+.concept-btn{border:1.5px solid #e5e7e5;border-radius:10px;padding:11px 8px;text-align:center;cursor:pointer;font-size:11.5px;line-height:1.4;font-family:inherit;font-weight:500}
+.concept-btn.obligatorio{background:#EBF4FF;border-color:#BFDBFE;color:#1E40AF}
+.concept-btn.opcional{background:#fff;color:#1a1a1a}
+.concept-btn:active{opacity:0.7}
+.concept-btn i{display:block;font-size:22px;margin-bottom:5px}
+.concept-btn.obligatorio i{color:#2563EB}
+.concept-btn.opcional i{color:#1D9E75}
+/* Entry cards */
 .entry-card{background:#fff;border:1px solid #e5e7e5;border-radius:10px;padding:10px;margin-bottom:8px;display:flex;gap:10px;align-items:flex-start}
 .entry-thumb{width:68px;height:68px;border-radius:8px;object-fit:cover;flex-shrink:0;background:#e5e7e5}
 .entry-info{flex:1;min-width:0}
 .entry-name{font-size:13px;font-weight:600;margin-bottom:2px}
+.entry-plan{font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;display:inline-block;margin-bottom:3px}
+.entry-plan.capp{background:#E1F5EE;color:#0F6E56}
+.entry-plan.ciaqmp{background:#EBF4FF;color:#1E40AF}
 .entry-time{font-size:11px;color:#777}
-.entry-delete{background:none;border:none;color:#aaa;cursor:pointer;padding:2px;font-size:18px;line-height:1}
-.badge{display:inline-block;font-size:12px;padding:3px 10px;border-radius:20px;background:#E1F5EE;color:#0F6E56;font-weight:600;margin-bottom:10px}
+.entry-delete{background:#fee2e2;border:none;color:#dc2626;cursor:pointer;border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0}
+.entry-delete svg{width:16px;height:16px}
+.badge{display:inline-block;font-size:12px;padding:3px 10px;border-radius:20px;font-weight:600;margin-bottom:10px}
+.badge.capp{background:#E1F5EE;color:#0F6E56}
+.badge.ciaqmp{background:#EBF4FF;color:#1E40AF}
 .topbar{display:flex;align-items:center;gap:10px;margin-bottom:1.5rem}
 .back-btn{background:#fff;border:1px solid #e5e7e5;border-radius:8px;cursor:pointer;color:#555;font-size:20px;padding:6px 8px;line-height:1;display:flex}
 .step-indicator{font-size:12px;color:#888;margin-bottom:1px}
@@ -43,23 +57,40 @@ textarea{height:72px;resize:none;font-family:inherit}
 .empty-state i{font-size:40px;display:block;margin-bottom:10px;opacity:0.3}
 #photo-preview{margin-bottom:12px;display:none}
 #photo-preview img{width:100%;border-radius:10px;display:block}
-.ts-badge{font-size:11px;color:#777;margin-top:5px;padding-left:2px}
+.ts-badge{font-size:11px;color:#777;margin-top:5px}
 .summary-row{display:flex;justify-content:space-between;font-size:14px;padding:7px 0;border-bottom:1px solid #f0f0f0}
 .summary-row:last-child{border-bottom:none}
-.counter{background:#1D9E75;color:#fff;border-radius:50%;width:20px;height:20px;font-size:11px;display:inline-flex;align-items:center;justify-content:center;font-weight:600;margin-left:6px;vertical-align:middle}
-.splash{padding-top:32px}
-.splash-icon{width:56px;height:56px;background:#E1F5EE;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;color:#1D9E75;margin-bottom:16px}
+.counter{background:#1D9E75;color:#fff;border-radius:50%;width:22px;height:22px;font-size:11px;display:inline-flex;align-items:center;justify-content:center;font-weight:600;margin-left:6px;vertical-align:middle}
+.splash-icon{width:52px;height:52px;background:#E1F5EE;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;color:#1D9E75;margin-bottom:12px}
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e5e7e5;padding:10px 16px;display:none;z-index:100}
+.bottom-bar.visible{display:block;max-width:480px;margin:0 auto}
+/* Instrucciones home */
+.instrucciones{background:#fff;border:1px solid #e5e7e5;border-radius:12px;padding:14px 16px;margin-bottom:14px}
+.instrucciones p{font-size:13px;color:#444;line-height:1.5;margin-bottom:8px}
+.instrucciones p:last-child{margin-bottom:0}
+.legend-dot{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;margin-bottom:6px}
+.dot-blue{width:13px;height:13px;border-radius:3px;background:#2563EB;flex-shrink:0}
+.dot-white{width:13px;height:13px;border-radius:3px;background:#fff;border:1.5px solid #d0d5d0;flex-shrink:0}
 </style>
 </head>
 <body>
 
-<div id="screen-home" class="screen active splash">
+<!-- HOME -->
+<div id="screen-home" class="screen active" style="padding-top:24px">
   <div class="splash-icon"><i class="ti ti-leaf"></i></div>
-  <div class="logo">THREE · LEED BD+C</div>
-  <h1>Reporte ESC<br><span style="color:#777;font-size:16px;font-weight:400">Construction Activity Pollution Prevention</span></h1>
+  <h1>Reporte ESC + IAQ</h1>
+  <p style="font-size:14px;color:#777;margin-bottom:16px">Construction Activity Pollution Prevention<br>+ Indoor Air Quality Management Plan</p>
+
+  <div class="instrucciones">
+    <div class="legend-dot"><div class="dot-blue"></div> Obligatorio — incluir en cada reporte</div>
+    <div class="legend-dot"><div class="dot-white"></div> Incluir cuando aplique a la etapa del proyecto</div>
+  </div>
+
   <div class="card">
+    <label>Nombre de empresa</label>
+    <input type="text" id="empresa" placeholder="Nombre de la empresa" />
     <label>Proyecto</label>
-    <input type="text" id="proj-name" placeholder="Ej. Vesta Park Apodaca NL" />
+    <input type="text" id="proj-name" placeholder="Nombre del proyecto" />
     <label>No. de reporte</label>
     <input type="number" id="report-num" placeholder="Ej. 11" />
     <label>Elaborado por</label>
@@ -75,25 +106,41 @@ textarea{height:72px;resize:none;font-family:inherit}
   <button class="btn btn-secondary" style="margin-top:8px" onclick="goToReview()">Ver entradas guardadas <span id="counter-badge" class="counter">0</span></button>
 </div>
 
+<!-- CONCEPTS -->
 <div id="screen-concepts" class="screen">
   <div class="topbar">
     <button class="back-btn" onclick="showScreen('screen-home')"><i class="ti ti-arrow-left"></i></button>
     <div>
-      <div class="step-indicator">Paso 1 de 2</div>
+      <div class="step-indicator">Captura de evidencia</div>
       <h2 style="margin-bottom:0">¿Qué vas a fotografiar?</h2>
     </div>
   </div>
-  <div class="concept-grid" id="concept-grid"></div>
+
+  <div class="section-label obligatorio"><i class="ti ti-circle-filled" style="font-size:9px;margin-right:4px"></i>CAPP — Obligatorios</div>
+  <div class="concept-grid" id="grid-capp-oblig"></div>
+
+  <div class="section-label opcional" style="margin-top:8px">CAPP — Cuando aplique</div>
+  <div class="concept-grid" id="grid-capp-opt"></div>
+
+  <div class="section-label opcional" style="margin-top:8px">CIAQMP — Cuando aplique</div>
+  <div class="concept-grid" id="grid-ciaq-opt"></div>
+  <div id="grid-ciaq-oblig" style="display:none"></div>
+
   <div class="divider"></div>
   <p style="font-size:12px;color:#888;margin-bottom:10px">¿No encuentras el concepto?</p>
-  <button class="btn btn-secondary" onclick="goCustom()"><i class="ti ti-pencil"></i>Agregar concepto personalizado</button>
+  <button class="btn btn-secondary" onclick="goCustom()" style="margin-bottom:12px"><i class="ti ti-pencil"></i>Agregar concepto personalizado</button>
+
+  <div id="bar-concepts" class="bottom-bar">
+    <button class="btn btn-primary" onclick="goToReview()"><i class="ti ti-file-text"></i>Ver entradas y generar reporte <span id="counter-bar" class="counter" style="background:rgba(255,255,255,0.3)">0</span></button>
+  </div>
 </div>
 
+<!-- PHOTO -->
 <div id="screen-photo" class="screen">
   <div class="topbar">
     <button class="back-btn" onclick="showScreen('screen-concepts')"><i class="ti ti-arrow-left"></i></button>
     <div>
-      <div class="step-indicator">Paso 2 de 2</div>
+      <div class="step-indicator">Toma de evidencia</div>
       <h2 id="photo-screen-title" style="margin-bottom:0">Toma la foto</h2>
     </div>
   </div>
@@ -104,27 +151,38 @@ textarea{height:72px;resize:none;font-family:inherit}
   <div id="notes-section" style="display:none;margin-top:14px">
     <label>Nota adicional (opcional)</label>
     <textarea id="extra-note" placeholder="Observación o acción correctiva..."></textarea>
-    <button class="btn btn-primary" onclick="saveEntry()"><i class="ti ti-check"></i>Guardar y continuar</button>
+    <button class="btn btn-primary" id="save-entry-btn" onclick="saveEntry()"><i class="ti ti-check"></i>Guardar y continuar</button>
   </div>
 </div>
 
+<!-- CUSTOM -->
 <div id="screen-custom" class="screen">
   <div class="topbar">
     <button class="back-btn" onclick="showScreen('screen-concepts')"><i class="ti ti-arrow-left"></i></button>
     <h2 style="margin-bottom:0">Concepto personalizado</h2>
   </div>
   <div class="card">
+    <label>Plan</label>
+    <select id="custom-plan">
+      <option value="CAPP">CAPP</option>
+      <option value="CIAQMP">CIAQMP</option>
+    </select>
     <label>Actividad (español)</label>
     <input type="text" id="custom-es" placeholder="Ej. Revisión de cunetas perimetrales" />
     <label>Activity (English)</label>
     <input type="text" id="custom-en" placeholder="Ej. Perimeter ditch inspection" />
+    <label>Descripción (español)</label>
+    <textarea id="custom-desc-es" placeholder="Descripción de la actividad..."></textarea>
+    <label>Description (English)</label>
+    <textarea id="custom-desc-en" placeholder="Activity description..."></textarea>
   </div>
   <button class="btn btn-primary" onclick="useCustomConcept()"><i class="ti ti-arrow-right"></i>Tomar foto de este concepto</button>
 </div>
 
+<!-- REVIEW -->
 <div id="screen-review" class="screen">
   <div class="topbar">
-    <button class="back-btn" onclick="showScreen('screen-home')"><i class="ti ti-arrow-left"></i></button>
+    <button class="back-btn" onclick="goToCapture()"><i class="ti ti-arrow-left"></i></button>
     <h2 style="margin-bottom:0">Entradas del reporte</h2>
   </div>
   <div id="entries-list"></div>
@@ -132,6 +190,7 @@ textarea{height:72px;resize:none;font-family:inherit}
   <button class="btn btn-primary" onclick="generateReport()" id="export-btn" style="margin-top:8px"><i class="ti ti-file-text"></i>Generar reporte</button>
 </div>
 
+<!-- REPORT PREVIEW -->
 <div id="screen-report" class="screen">
   <div class="topbar">
     <button class="back-btn" onclick="showScreen('screen-review')"><i class="ti ti-arrow-left"></i></button>
@@ -149,16 +208,40 @@ textarea{height:72px;resize:none;font-family:inherit}
 
 <script>
 const CONCEPTS = [
-  {id:'llantas',icon:'ti-steering-wheel',es:'Lavadero de llantas',en:'Wheel washer cleaning',desc_es:'Se sigue realizando la limpieza del lava llantas para su mantenimiento, tomando las precauciones necesarias para evitar que el polvo y el lodo de los neumáticos se dispersen fuera del área de trabajo.',desc_en:'The wheel washer is still being cleaned for maintenance purposes, taking the necessary precautions to prevent dust and mud from the tires from dispersing outside the work area.'},
-  {id:'camiones',icon:'ti-truck',es:'Camión con materiales cubiertos',en:'Trucks covered with tarps',desc_es:'Se verifica que todos los camiones que entran o salen de la obra estén cubiertos con lonas para prevenir la erosión y la contaminación ambiental.',desc_en:'All trucks entering or leaving the site are inspected to ensure they are covered with tarps to prevent erosion and environmental contamination.'},
-  {id:'velocidad',icon:'ti-road-sign',es:'Límite de velocidad',en:'Speed limit signage',desc_es:'Se mantiene la señalización en el acceso de la obra para evitar que cualquier vehículo cause contaminación por polvo y partículas en suspensión al transitar por las vialidades.',desc_en:'Signage is maintained at the entrance to the site to prevent any vehicle from causing pollution by dust and suspended particles when travelling on the roads.'},
-  {id:'peligrosos',icon:'ti-alert-triangle',es:'Almacén de residuos peligrosos',en:'Hazardous waste storage',desc_es:'Se mantiene una zona específica para la gestión y almacenamiento de residuos peligrosos, equipada con todas las medidas de seguridad necesarias para garantizar su correcta disposición y minimizar cualquier riesgo ambiental.',desc_en:'We maintain a specific area for the management and storage of hazardous waste, equipped with all the necessary security measures to ensure its correct disposal and minimize any environmental risk.'},
-  {id:'sanitarios',icon:'ti-droplet',es:'Limpieza de sanitarios',en:'Sanitary cleaning',desc_es:'Se realizan limpiezas frecuentes para asegurar la higiene y minimizar la contaminación.',desc_en:'Frequent cleanings are carried out to ensure hygiene and minimise contamination.'},
-  {id:'riegos',icon:'ti-plant-2',es:'Riegos en vialidades',en:'Road watering',desc_es:'Se siguen realizando riegos en las vialidades internas para evitar la dispersión de polvo en la obra.',desc_en:'Watering continues on internal roads to prevent dust from spreading on site.'},
-  {id:'derrames',icon:'ti-first-aid-kit',es:'Kit anti derrames',en:'Spill kit',desc_es:'Se cuenta con un kit anti derrames en la obra para prevenir y controlar cualquier derrame en el área de residuos peligrosos, equipado con los materiales necesarios para una respuesta rápida y efectiva.',desc_en:'We have a spill kit on site to prevent and control any spills in the hazardous waste area, equipped with all the necessary materials for a fast and effective response.'},
-  {id:'rsu',icon:'ti-trash',es:'Retiro de RSU',en:'Solid waste removal',desc_es:'Se retiran los residuos sólidos urbanos de los contenedores GEN cada semana.',desc_en:'Urban solid waste is removed from the GEN containers every week.'},
-  {id:'geotextil',icon:'ti-barrier-block',es:'Malla geotextil',en:'Geotextile mesh',desc_es:'Se coloca/mantiene la malla geotextil en el perímetro para evitar la sedimentación de taludes.',desc_en:'Geotextile mesh is placed/maintained along the perimeter to prevent slope sedimentation.'},
-  {id:'materiales',icon:'ti-stack',es:'Estibado de materiales',en:'Material storage (soil protection)',desc_es:'Todos los materiales utilizados en obra se encuentran estibados para evitar daños sobre el suelo.',desc_en:'All materials used in construction are stored to avoid damage to the soil.'},
+  {id:'c2',plan:'CAPP',oblig:true,icon:'ti-barrier-block',es:'Barrera perimetral',en:'Perimeter barrier',desc_es:'Instalación de barreras perimetrales continuas y sin rupturas para evitar que sedimentos acumulados, polvo o material suelto salgan del sitio.',desc_en:'Installation of continuous perimeter barriers without gaps to prevent accumulated sediments, dust, or loose material from leaving the site.'},
+  {id:'c3',plan:'CAPP',oblig:true,icon:'ti-steering-wheel',es:'Lavadero de llantas',en:'Wheel washer',desc_es:'Limpieza y mantenimiento del lavadero de llantas para evitar que el lodo y polvo adherido a los neumáticos sea arrastrado fuera del sitio de construcción.',desc_en:'Cleaning and maintenance of the wheel washer to prevent mud and dust adhered to tires from being tracked outside the construction site.'},
+  {id:'c4',plan:'CAPP',oblig:true,icon:'ti-truck',es:'Camión con materiales cubiertos',en:'Trucks covered with tarps',desc_es:'Verificación de que todos los camiones que entran o salen de la obra transporten sus materiales cubiertos con lona, sin material expuesto ni caída durante el traslado.',desc_en:'Verification that all trucks entering or leaving the site transport their materials covered with tarps, with no exposed material or spillage during transit.'},
+  {id:'c21',plan:'CAPP',oblig:true,icon:'ti-oil',es:'Charolas de contención bajo maquinaria',en:'Drip pans under machinery',desc_es:'Colocación de charolas de contención debajo y alrededor de vehículos o maquinaria bajo puntos de fuga, sin escurrimientos fuera del área de contención.',desc_en:'Placement of drip pans below and around vehicles or machinery under leak points, with no runoff outside the containment area.'},
+  {id:'c27',plan:'CAPP',oblig:true,icon:'ti-trash',es:'Retiro de residuos sólidos urbanos (RSU)',en:'Urban solid waste removal',desc_es:'Manejo y retiro periódico de residuos sólidos urbanos generados en la obra mediante contenedores adecuados, separados y sin sobrellenado, con zona de almacenamiento limpia.',desc_en:'Periodic handling and removal of urban solid waste generated on site using adequate, separated containers without overfilling, with a clean storage area.'},
+  {id:'c28',plan:'CAPP',oblig:true,icon:'ti-droplet',es:'Sanitarios portátiles',en:'Portable restrooms',desc_es:'Ubicación de sanitarios portátiles en zonas estables y seguras para evitar volteo, fugas o contaminación del suelo, nivelados, asegurados y limpios.',desc_en:'Placement of portable restrooms in stable and safe areas to prevent tipping, leaks, or soil contamination, kept level, secured, and clean.'},
+  {id:'c1',plan:'CAPP',oblig:false,icon:'ti-trees',es:'Zona de amortiguamiento natural',en:'Natural buffer zone',desc_es:'Prevención del arrastre de sedimentos hacia cuerpos de agua cercanos mediante zonas vegetadas de amortiguamiento, delimitadas, señalizadas y sin invasión de maquinaria, materiales o residuos.',desc_en:'Prevention of sediment runoff toward nearby water bodies through vegetated buffer zones that are delimited, marked, and free from machinery, materials, or waste.'},
+  {id:'c5',plan:'CAPP',oblig:false,icon:'ti-road',es:'Mantenimiento de accesos',en:'Access road maintenance',desc_es:'Mantenimiento de accesos limpios y estables para reducir polvo, lodo y arrastre de sedimentos, con accesos sin acumulación crítica de lodo, baches, polvo excesivo o material suelto fuera de control.',desc_en:'Maintenance of clean and stable access roads to reduce dust, mud, and sediment tracking, with no critical accumulation of mud, potholes, excessive dust, or uncontrolled loose material.'},
+  {id:'c6',plan:'CAPP',oblig:false,icon:'ti-stack',es:'Protección de acumulaciones de tierra',en:'Sediment stockpile protection',desc_es:'Colocación de barreras físicas aguas abajo y cubierta temporal sobre acumulaciones de tierra o sedimento para evitar contacto con lluvia y arrastre hacia drenajes o cuerpos de agua.',desc_en:'Placement of physical barriers downstream and temporary cover over soil or sediment stockpiles to prevent contact with rain and runoff toward drains or water bodies.'},
+  {id:'c7',plan:'CAPP',oblig:false,icon:'ti-plant-2',es:'Riego en vialidades',en:'Road watering (dust control)',desc_es:'Realización de riegos periódicos en las vialidades internas para humedecer superficies y evitar la dispersión de polvo hacia zonas externas al sitio de construcción.',desc_en:'Periodic watering of internal roads to moisten surfaces and prevent dust from dispersing to areas outside the construction site.'},
+  {id:'c10',plan:'CAPP',oblig:false,icon:'ti-seeding',es:'Protección de áreas verdes futuras',en:'Future green area protection',desc_es:'Separación y resguardo de la capa superior del suelo para reutilización en áreas verdes, con restricción de tránsito vehicular en zonas destinadas a vegetación para evitar compactación.',desc_en:'Separation and storage of topsoil for reuse in green areas, with restriction of vehicle traffic in areas designated for vegetation to prevent compaction.'},
+  {id:'c12',plan:'CAPP',oblig:false,icon:'ti-ripple',es:'Protección de entradas a drenaje pluvial',en:'Storm drain inlet protection',desc_es:'Prevención del ingreso de sedimentos al drenaje pluvial mediante la limpieza y protección continua de descargas, manteniéndolas libres de acumulaciones, material suelto y residuos cercanos.',desc_en:'Prevention of sediment entering the storm drain through continuous cleaning and protection of inlets, keeping them free of accumulations, loose material, and nearby waste.'},
+  {id:'c16',plan:'CAPP',oblig:false,icon:'ti-bucket',es:'Control de área de lavado de concreto',en:'Concrete washout area control',desc_es:'Prohibición de la descarga de agua de lavado de ollas de concreto al suelo, drenaje pluvial o cuerpos de agua, con área de lavado controlada y operando.',desc_en:'Prohibition of concrete washout water discharge to the ground, storm drain, or water bodies, with a controlled and operational washout area.'},
+  {id:'c20',plan:'CAPP',oblig:false,icon:'ti-first-aid-kit',es:'Kit anti derrames',en:'Spill kit',desc_es:'Mantenimiento en sitio del kit anti derrames completo, accesible, señalizado y con insumos vigentes para contención y retiro de sustancias tóxicas o peligrosas generadas por derrames.',desc_en:'On-site maintenance of a complete, accessible, marked spill kit with current supplies for containment and removal of toxic or hazardous substances generated by spills.'},
+  {id:'c22',plan:'CAPP',oblig:false,icon:'ti-engine',es:'Disposición de aceites y residuos aceitosos',en:'Oil and oily waste disposal',desc_es:'Disposición o reciclaje de aceites y residuos aceitosos conforme a la normativa local aplicable, en contenedores etiquetados y con evidencia de retiro o reciclaje autorizado.',desc_en:'Disposal or recycling of oils and oily waste in accordance with applicable local regulations, in labeled containers with evidence of authorized removal or recycling.'},
+  {id:'c23',plan:'CAPP',oblig:false,icon:'ti-wash',es:'Limpieza de derrames con absorbentes',en:'Spill cleanup with absorbents',desc_es:'Prevención de la dispersión de contaminantes mediante la contención y limpieza inmediata de derrames con absorbentes o métodos secos, sin lavado con agua ni escurrimientos hacia drenajes.',desc_en:'Prevention of contaminant dispersion through immediate containment and cleanup of spills using absorbents or dry methods, without water washing or runoff toward drains.'},
+  {id:'c24',plan:'CAPP',oblig:false,icon:'ti-car',es:'Área de lavado de maquinaria y vehículos',en:'Machinery and vehicle washing area',desc_es:'Control del lavado de maquinaria, vehículos y llantas en zona definida con manejo controlado del agua y residuos, sin escurrimientos no controlados.',desc_en:'Control of machinery, vehicle, and tire washing in a designated area with controlled water and waste management, and no uncontrolled runoff.'},
+  {id:'c25',plan:'CAPP',oblig:false,icon:'ti-packages',es:'Protección de materiales de construcción',en:'Construction material protection',desc_es:'Protección de materiales de construcción con cubierta plástica, lona o techumbre temporal durante su almacenamiento, cubiertos y elevados cuando aplique, sin exposición directa a lluvia o polvo.',desc_en:'Protection of construction materials with plastic cover, tarp, or temporary roofing during storage, covered and elevated when applicable, with no direct exposure to rain or dust.'},
+  {id:'c26',plan:'CAPP',oblig:false,icon:'ti-alert-triangle',es:'Almacén de residuos peligrosos',en:'Hazardous waste storage',desc_es:'Mantenimiento de zona específica para la gestión y almacenamiento de residuos peligrosos en contenedores cerrados, etiquetados, separados y con medidas de contención para prevenir derrames.',desc_en:'Maintenance of a specific area for the management and storage of hazardous waste in closed, labeled, and separated containers with containment measures to prevent spills.'},
+  {id:'c29',plan:'CAPP',oblig:false,icon:'ti-bottle',es:'Control de líquidos de desecho',en:'Waste liquid control',desc_es:'Almacenamiento de líquidos de desecho en contenedores impermeables cerrados y con capacidad suficiente; prohibición de su descarga al drenaje pluvial.',desc_en:'Storage of waste liquids in sealed, impermeable containers with sufficient capacity; prohibition of discharge to the storm drain.'},
+  {id:'q32',plan:'CIAQMP',oblig:false,icon:'ti-air-conditioning',es:'Protección de equipos HVAC',en:'HVAC equipment protection',desc_es:'Protección de equipos HVAC y accesorios contra polvo, humedad y olores durante su almacenamiento en sitio, con equipos y accesorios cubiertos, secos y sin polvo visible.',desc_en:'Protection of HVAC equipment and accessories against dust, moisture, and odors during on-site storage, with equipment and accessories covered, dry, and free of visible dust.'},
+  {id:'q38',plan:'CIAQMP',oblig:false,icon:'ti-barrier-block',es:'Barreras de control de polvo interior',en:'Interior dust control barriers',desc_es:'Colocación de barreras plásticas o cortinas en el perímetro del sitio para controlar polvo y contaminantes interiores, con barreras instaladas, continuas y en buen estado en zonas definidas.',desc_en:'Placement of plastic barriers or curtains at the site perimeter to control interior dust and contaminants, with installed, continuous, and well-maintained barriers in designated areas.'},
+  {id:'q39',plan:'CIAQMP',oblig:false,icon:'ti-molecule',es:'Cumplimiento de límites VOC / SCAQMD',en:'VOC / SCAQMD compliance',desc_es:'Uso de adhesivos, selladores, primers, pinturas, recubrimientos y maderas compuestas que cumplan límites VOC conforme a SCAQMD Rule 1168, con fichas técnicas y listado de productos documentado.',desc_en:'Use of adhesives, sealers, primers, paints, coatings, and composite wood products that comply with VOC limits per SCAQMD Rule 1168, with technical data sheets and a documented product list.'},
+  {id:'q40',plan:'CIAQMP',oblig:false,icon:'ti-flame',es:'Prevención de ingreso de emisiones de combustión',en:'Combustion emission ingress prevention',desc_es:'Prevención de que emisiones de vehículos, equipos o herramientas de combustión ingresen al edificio, con equipos de combustión ubicados lejos de accesos, tomas de aire y aberturas.',desc_en:'Prevention of vehicle, equipment, or combustion tool emissions from entering the building, with combustion equipment located away from entrances, air intakes, and openings.'},
+  {id:'q41',plan:'CIAQMP',oblig:false,icon:'ti-smoking-no',es:'Política de no fumar en el predio',en:'No smoking policy on site',desc_es:'Implementación de política estricta de no fumar dentro del edificio y en el predio del proyecto, con señalamientos instalados en zonas clave.',desc_en:'Implementation of a strict no-smoking policy inside the building and throughout the project site, with signage installed at key areas.'},
+  {id:'q42',plan:'CIAQMP',oblig:false,icon:'ti-bolt',es:'Priorización de equipos eléctricos',en:'Prioritization of electric equipment',desc_es:'Reducción de emisiones interiores mediante priorización de equipos eléctricos sobre equipos de gasolina o diésel dentro o cerca del edificio, con uso de combustión justificado y controlado cuando sea inevitable.',desc_en:'Reduction of interior emissions by prioritizing electric equipment over gasoline or diesel equipment inside or near the building, with combustion use justified and controlled when unavoidable.'},
+  {id:'q43',plan:'CIAQMP',oblig:false,icon:'ti-school',es:'Capacitación en calidad del aire interior',en:'Indoor air quality (IAQ) training',desc_es:'Capacitación de trabajadores, contratistas y subcontratistas sobre prácticas para reducir contaminantes del aire y cumplir el plan IAQp, con lista de asistencia, material de capacitación y evidencia de inducción a personal nuevo.',desc_en:'Training of workers, contractors, and subcontractors on practices to reduce air contaminants and comply with the IAQp plan, with attendance list, training materials, and evidence of induction for new personnel.'},
+  {id:'q44',plan:'CIAQMP',oblig:false,icon:'ti-wind',es:'Incremento de ventilación exterior',en:'Increased exterior ventilation',desc_es:'Incremento de ventilación exterior mediante apertura de ventilas, ventanas y puertas cuando la actividad lo requiera, con aberturas operando y flujo de ventilación exterior disponible.',desc_en:'Increase of exterior ventilation by opening vents, windows, and doors when the activity requires it, with openings operating and exterior ventilation flow available.'},
+  {id:'q45',plan:'CIAQMP',oblig:false,icon:'ti-box',es:'Cobertura de superficies y residuos (control de polvo)',en:'Surface and waste covering for dust control',desc_es:'Cobertura con plástico de superficies susceptibles a absorber humedad y de residuos para evitar emisión de polvo, tierra u olores al aire interior, con elementos cubiertos y contenidos.',desc_en:'Covering with plastic of surfaces susceptible to moisture absorption and waste to prevent emission of dust, soil, or odors to interior air, with elements covered and contained.'},
+  {id:'q46',plan:'CIAQMP',oblig:false,icon:'ti-door-enter',es:'Tapetes y protecciones de piso en accesos',en:'Entry mats and floor protection',desc_es:'Reducción del ingreso de contaminantes mediante la colocación de tapetes temporales y protecciones de piso en accesos, con tapetes instalados, limpios y funcionales.',desc_en:'Reduction of contaminant ingress through the placement of temporary mats and floor protection at access points, with mats installed, clean, and functional.'},
+  {id:'q47',plan:'CIAQMP',oblig:false,icon:'ti-package',es:'Protección de materiales absorbentes',en:'Absorbent material protection',desc_es:'Protección de materiales altamente absorbentes mediante almacenamiento interior en empaque original o cubiertos y sellados, con materiales secos, sellados y sin manchas, deformaciones u olor a humedad.',desc_en:'Protection of highly absorbent materials through indoor storage in original packaging or covered and sealed, with materials dry, sealed, and free of stains, deformation, or moisture odor.'},
+  {id:'q48',plan:'CIAQMP',oblig:false,icon:'ti-calendar-check',es:'Programa de limpieza interior',en:'Interior cleaning program',desc_es:'Establecimiento y cumplimiento de una frecuencia de limpieza acordada entre el coordinador de proyecto y el representante CAI, con programa definido, responsables asignados y registros de cumplimiento.',desc_en:'Establishment and compliance with a cleaning frequency agreed between the project coordinator and the IAQ representative, with a defined program, assigned responsibilities, and compliance records.'},
+  {id:'q49',plan:'CIAQMP',oblig:false,icon:'ti-vacuum-cleaner',es:'Control de polvo interior',en:'Interior dust control',desc_es:'Control de polvo interior mediante barrido húmedo, trapeado o uso de aspiradora industrial en áreas donde se hayan realizado actividades que generen polvo o residuos finos.',desc_en:'Interior dust control through wet sweeping, mopping, or industrial vacuum use in areas where activities generating dust or fine residues have been carried out.'},
+  {id:'q50',plan:'CIAQMP',oblig:false,icon:'ti-clock-hour-4',es:'Separación de 48h entre VOC y materiales absorbentes',en:'48h separation: VOC activities and absorbent materials',desc_es:'Control de emisiones VOC mediante la programación de actividades que emitan VOC al menos 48 horas antes de instalar materiales absorbentes, con cronograma que muestre la separación mínima requerida.',desc_en:'VOC emission control through scheduling of VOC-emitting activities at least 48 hours before installing absorbent materials, with a schedule showing the required minimum separation.'},
 ];
 
 let entries = [];
@@ -166,14 +249,52 @@ let selectedConcept = null;
 let currentPhotoData = null;
 let currentTimestamp = null;
 
+function saveToStorage(){
+  localStorage.setItem('esc_entries', JSON.stringify(entries));
+  localStorage.setItem('esc_form', JSON.stringify({
+    empresa: document.getElementById('empresa').value,
+    proj: document.getElementById('proj-name').value,
+    num: document.getElementById('report-num').value,
+    elab: document.getElementById('elaborado-por').value,
+    freq: document.getElementById('frecuencia').value,
+  }));
+}
+
+function loadFromStorage(){
+  try {
+    const saved = localStorage.getItem('esc_entries');
+    if(saved) entries = JSON.parse(saved);
+  } catch(e){ entries = []; }
+  try {
+    const form = JSON.parse(localStorage.getItem('esc_form') || '{}');
+    if(form.empresa) document.getElementById('empresa').value = form.empresa;
+    if(form.proj) document.getElementById('proj-name').value = form.proj;
+    if(form.num) document.getElementById('report-num').value = form.num;
+    if(form.elab) document.getElementById('elaborado-por').value = form.elab;
+    if(form.freq) document.getElementById('frecuencia').value = form.freq;
+  } catch(e){}
+}
+
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
+  updateBottomBar(id);
+}
+
+function updateBottomBar(screenId){
+  const bar = document.getElementById('bar-concepts');
+  if(screenId==='screen-concepts' && entries.length>0){
+    bar.classList.add('visible');
+  } else {
+    bar.classList.remove('visible');
+  }
 }
 
 function updateCounter(){
-  document.getElementById('counter-badge').textContent=entries.length;
+  document.getElementById('counter-badge').textContent = entries.length;
+  document.getElementById('counter-bar').textContent = entries.length;
+  updateBottomBar(document.querySelector('.screen.active').id);
 }
 
 function goToCapture(){
@@ -182,49 +303,69 @@ function goToCapture(){
 }
 
 function renderConcepts(){
-  const grid=document.getElementById('concept-grid');
-  grid.innerHTML=CONCEPTS.map(c=>`<button class="concept-btn" onclick="selectConcept('${c.id}')"><i class="ti ${c.icon}"></i>${c.es}</button>`).join('');
+  const grids = {
+    'capp-oblig': document.getElementById('grid-capp-oblig'),
+    'capp-opt': document.getElementById('grid-capp-opt'),
+    'ciaq-opt': document.getElementById('grid-ciaq-opt'),
+  };
+  Object.values(grids).forEach(g=>g.innerHTML='');
+
+  CONCEPTS.forEach(c=>{
+    const cls = c.oblig ? 'obligatorio' : 'opcional';
+    // CIAQMP has no obligatorios — all go to opcional
+    const planKey = c.plan==='CAPP' ? 'capp' : 'ciaq';
+    const key = planKey + '-' + (c.plan==='CAPP' && c.oblig ? 'oblig' : 'opt');
+    if(grids[key]) grids[key].innerHTML += `<button class="concept-btn ${cls}" onclick="selectConcept('${c.id}')"><i class="ti ${c.icon}"></i>${c.es}</button>`;
+  });
 }
 
 function selectConcept(id){
-  selectedConcept=CONCEPTS.find(c=>c.id===id);
+  selectedConcept = CONCEPTS.find(c=>c.id===id);
   openPhotoScreen();
 }
 
-function goCustom(){showScreen('screen-custom');}
+function goCustom(){ showScreen('screen-custom'); }
 
 function useCustomConcept(){
-  const es=document.getElementById('custom-es').value.trim();
-  const en=document.getElementById('custom-en').value.trim();
+  const plan = document.getElementById('custom-plan').value;
+  const es = document.getElementById('custom-es').value.trim();
+  const en = document.getElementById('custom-en').value.trim();
+  const desc_es = document.getElementById('custom-desc-es').value.trim();
+  const desc_en = document.getElementById('custom-desc-en').value.trim();
   if(!es||!en){alert('Escribe el concepto en ambos idiomas.');return;}
-  selectedConcept={id:'custom_'+Date.now(),icon:'ti-pencil',es,en,desc_es:es,desc_en:en};
+  selectedConcept={id:'custom_'+Date.now(),plan,oblig:false,icon:'ti-pencil',es,en,desc_es:desc_es||es,desc_en:desc_en||en};
   openPhotoScreen();
 }
 
 function openPhotoScreen(){
-  currentPhotoData=null;currentTimestamp=null;
-  document.getElementById('photo-screen-title').textContent=selectedConcept.es;
-  document.getElementById('selected-concept-badge').textContent=selectedConcept.es;
+  currentPhotoData=null; currentTimestamp=null;
+  document.getElementById('photo-screen-title').textContent = selectedConcept.es;
+  const badge = document.getElementById('selected-concept-badge');
+  badge.textContent = selectedConcept.plan + ' · ' + selectedConcept.es;
+  badge.className = 'badge ' + selectedConcept.plan.toLowerCase();
   document.getElementById('photo-preview').style.display='none';
   document.getElementById('notes-section').style.display='none';
   document.getElementById('photo-btn').innerHTML='<i class="ti ti-camera"></i>Tomar foto';
   document.getElementById('extra-note').value='';
+  const saveBtn = document.getElementById('save-entry-btn');
+  saveBtn.disabled = false;
+  saveBtn.innerHTML = '<i class="ti ti-check"></i>Guardar y continuar';
   showScreen('screen-photo');
 }
 
 function handlePhoto(e){
-  const file=e.target.files[0];
-  if(!file)return;
-  const now=new Date();
-  currentTimestamp=now;
-  const pad=n=>String(n).padStart(2,'0');
-  const tsText=`${pad(now.getDate())}/${pad(now.getMonth()+1)}/${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
-  const reader=new FileReader();
-  reader.onload=ev=>{
-    currentPhotoData=ev.target.result;
-    document.getElementById('preview-img').src=currentPhotoData;
+  const file = e.target.files[0];
+  if(!file) return;
+  const now = new Date();
+  currentTimestamp = now;
+  const pad = n=>String(n).padStart(2,'0');
+  const tsText = `${pad(now.getDate())}/${pad(now.getMonth()+1)}/${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    currentPhotoData = ev.target.result;
+    document.getElementById('preview-img').src = currentPhotoData;
     document.getElementById('photo-preview').style.display='block';
-    document.getElementById('ts-badge-text').textContent='📅 '+tsText;
+    document.getElementById('ts-badge-text').textContent = '📅 ' + tsText;
     document.getElementById('photo-btn').innerHTML='<i class="ti ti-camera-rotate"></i>Cambiar foto';
     document.getElementById('notes-section').style.display='block';
   };
@@ -233,64 +374,84 @@ function handlePhoto(e){
 }
 
 function saveEntry(){
+  const saveBtn = document.getElementById('save-entry-btn');
+  if(saveBtn.disabled) return; // ya se guardó esta entrada, ignora toques repetidos
   if(!currentPhotoData){alert('Toma una foto primero.');return;}
-  const note=document.getElementById('extra-note').value.trim();
-  const now=currentTimestamp||new Date();
-  const pad=n=>String(n).padStart(2,'0');
-  const dateStr=`${pad(now.getMonth()+1)}/${pad(now.getDate())}/${now.getFullYear()}`;
-  const tsStr=`${pad(now.getDate())}/${pad(now.getMonth()+1)}/${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
-  entries.push({concept:selectedConcept,photo:currentPhotoData,date:dateStr,timestamp:tsStr,note});
+  saveBtn.disabled = true;
+  saveBtn.innerHTML = '<i class="ti ti-check"></i>Guardando...';
+  // cierra el teclado virtual de inmediato para que el cambio de pantalla se vea sin demora
+  if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
+
+  const note = document.getElementById('extra-note').value.trim();
+  const now = currentTimestamp || new Date();
+  const pad = n=>String(n).padStart(2,'0');
+  const dateStr = `${pad(now.getMonth()+1)}/${pad(now.getDate())}/${now.getFullYear()}`;
+  const tsStr = `${pad(now.getDate())}/${pad(now.getMonth()+1)}/${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  entries.push({concept:selectedConcept, photo:currentPhotoData, date:dateStr, timestamp:tsStr, note});
+  saveToStorage();
   updateCounter();
   showScreen('screen-concepts');
   renderConcepts();
 }
 
-function goToReview(){renderEntries();showScreen('screen-review');}
+function goToReview(){ renderEntries(); showScreen('screen-review'); }
 
 function renderEntries(){
-  const list=document.getElementById('entries-list');
+  const list = document.getElementById('entries-list');
   if(entries.length===0){
-    list.innerHTML='<div class="empty-state"><i class="ti ti-inbox"></i>No hay entradas aún.<br>Agrega conceptos desde el inicio.</div>';
+    list.innerHTML='<div class="empty-state"><i class="ti ti-inbox"></i>No hay entradas aún.</div>';
     document.getElementById('export-btn').style.opacity='0.4';
     document.getElementById('export-btn').disabled=true;
     return;
   }
   document.getElementById('export-btn').style.opacity='1';
   document.getElementById('export-btn').disabled=false;
-  list.innerHTML=entries.map((e,i)=>`
+  list.innerHTML = entries.map((e,i)=>`
     <div class="entry-card">
       <img class="entry-thumb" src="${e.photo}" />
       <div class="entry-info">
+        <span class="entry-plan ${e.concept.plan.toLowerCase()}">${e.concept.plan}</span>
         <div class="entry-name">${e.concept.es}</div>
         <div class="entry-time">${e.timestamp}</div>
         ${e.note?`<div style="font-size:11px;color:#888;margin-top:2px">${e.note}</div>`:''}
       </div>
-      <button class="entry-delete" onclick="deleteEntry(${i})" aria-label="Eliminar"><i class="ti ti-trash"></i></button>
+      <button class="entry-delete" onclick="deleteEntry(${i})" aria-label="Eliminar entrada"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></button>
     </div>`).join('');
 }
 
 function deleteEntry(i){
-  if(confirm('¿Eliminar esta entrada?')){entries.splice(i,1);updateCounter();renderEntries();}
+  if(confirm('¿Eliminar esta entrada?')){
+    entries.splice(i,1);
+    saveToStorage();
+    updateCounter();
+    renderEntries();
+  }
 }
 
 function generateReport(){
-  if(entries.length===0)return;
-  const proj=document.getElementById('proj-name').value||'—';
-  const num=document.getElementById('report-num').value||'—';
-  const elab=document.getElementById('elaborado-por').value||'—';
-  const freq=document.getElementById('frecuencia').value;
-  const today=new Date();
-  const pad=n=>String(n).padStart(2,'0');
-  const sentDate=`${pad(today.getMonth()+1)}/${pad(today.getDate())}/${today.getFullYear()}`;
+  if(entries.length===0) return;
+  const empresa = document.getElementById('empresa').value||'—';
+  const proj = document.getElementById('proj-name').value||'—';
+  const num = document.getElementById('report-num').value||'—';
+  const elab = document.getElementById('elaborado-por').value||'—';
+  const freq = document.getElementById('frecuencia').value;
+  const today = new Date();
+  const pad = n=>String(n).padStart(2,'0');
+  const sentDate = `${pad(today.getMonth()+1)}/${pad(today.getDate())}/${today.getFullYear()}`;
   document.getElementById('report-meta-preview').innerHTML=`
+    <div class="summary-row"><span>Empresa</span><span style="font-weight:600">${empresa}</span></div>
     <div class="summary-row"><span>Proyecto</span><span style="font-weight:600">${proj}</span></div>
     <div class="summary-row"><span>No. de reporte</span><span style="font-weight:600">${num}</span></div>
     <div class="summary-row"><span>Elaborado por</span><span style="font-weight:600">${elab}</span></div>
     <div class="summary-row"><span>Fecha</span><span style="font-weight:600">${sentDate}</span></div>
     <div class="summary-row"><span>Frecuencia</span><span style="font-weight:600">${freq}</span></div>
     <div class="summary-row"><span>Entradas</span><span style="font-weight:600">${entries.length}</span></div>`;
-  document.getElementById('report-entries-preview').innerHTML=entries.map((e,i)=>`
+  document.getElementById('report-entries-preview').innerHTML = entries.map((e,i)=>`
     <div class="card" style="margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">
+        <div style="font-size:11px;font-weight:700;color:${e.concept.plan==='CAPP'?'#0F6E56':'#1E40AF'}">${e.concept.plan}</div>
+        <button class="entry-delete" onclick="deleteReportEntry(${i})" aria-label="Eliminar entrada"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></button>
+      </div>
       <div style="font-size:13px;font-weight:600;margin-bottom:6px">${i+1}. ${e.concept.es}</div>
       <img src="${e.photo}" style="width:100%;border-radius:8px;margin-bottom:6px;max-height:150px;object-fit:cover" />
       <div style="font-size:11px;color:#777">${e.timestamp}</div>
@@ -299,49 +460,79 @@ function generateReport(){
   showScreen('screen-report');
 }
 
-function downloadReport(){
-  const proj=document.getElementById('proj-name').value||'—';
-  const num=document.getElementById('report-num').value||'—';
-  const elab=document.getElementById('elaborado-por').value||'—';
-  const freq=document.getElementById('frecuencia').value;
-  const corrective=document.getElementById('corrective-text').value||'-';
-  const today=new Date();
-  const pad=n=>String(n).padStart(2,'0');
-  const sentDate=`${pad(today.getMonth()+1)}/${pad(today.getDate())}/${today.getFullYear()}`;
+function deleteReportEntry(i){
+  if(confirm('¿Eliminar esta entrada del reporte?')){
+    entries.splice(i,1);
+    saveToStorage();
+    updateCounter();
+    if(entries.length===0){
+      renderEntries();
+      showScreen('screen-review');
+    } else {
+      generateReport();
+    }
+  }
+}
 
-  const rows=entries.map(e=>`
+function downloadReport(){
+  const empresa = document.getElementById('empresa').value||'—';
+  const proj = document.getElementById('proj-name').value||'—';
+  const num = document.getElementById('report-num').value||'—';
+  const elab = document.getElementById('elaborado-por').value||'—';
+  const freq = document.getElementById('frecuencia').value;
+  const corrective = document.getElementById('corrective-text').value||'-';
+  const today = new Date();
+  const pad = n=>String(n).padStart(2,'0');
+  const sentDate = `${pad(today.getMonth()+1)}/${pad(today.getDate())}/${today.getFullYear()}`;
+
+  const cappEntries = entries.filter(e=>e.concept.plan==='CAPP');
+  const ciaqEntries = entries.filter(e=>e.concept.plan==='CIAQMP');
+
+  const makeRows = (arr) => arr.map(e=>`
     <tr>
-      <td style="width:20%;font-weight:600;font-size:10px;vertical-align:top;padding:6px 8px;border:1px solid #ccc">${e.concept.es}</td>
-      <td style="width:24%;font-size:9px;vertical-align:top;padding:6px 8px;border:1px solid #ccc">${e.concept.desc_es}${e.note?'<br><br><em>'+e.note+'</em>':''}</td>
-      <td style="width:24%;font-size:9px;vertical-align:top;padding:6px 8px;border:1px solid #ccc">${e.concept.desc_en}${e.note?'<br><br><em>'+e.note+'</em>':''}</td>
-      <td style="width:24%;vertical-align:top;padding:4px;border:1px solid #ccc;text-align:center"><img src="${e.photo}" style="width:100%;max-height:100px;object-fit:cover;border-radius:4px" /><div style="font-size:8px;color:#777;margin-top:3px">${e.timestamp}</div></td>
+      <td style="width:18%;font-weight:600;font-size:10px;vertical-align:top;padding:6px 8px;border:1px solid #ccc">${e.concept.es}<br>${e.concept.en}</td>
+      <td style="width:22%;font-size:9px;vertical-align:top;padding:6px 8px;border:1px solid #ccc">${e.concept.desc_es}${e.note?'<br><br><em>'+e.note+'</em>':''}</td>
+      <td style="width:22%;font-size:9px;vertical-align:top;padding:6px 8px;border:1px solid #ccc">${e.concept.desc_en}${e.note?'<br><br><em>'+e.note+'</em>':''}</td>
+      <td style="width:30%;vertical-align:top;padding:4px;border:1px solid #ccc;text-align:center"><img src="${e.photo}" style="width:120px;height:120px;object-fit:cover;border-radius:4px;display:block;margin:0 auto"/><div style="font-size:8px;color:#777;margin-top:3px">${e.timestamp}</div></td>
       <td style="width:8%;font-size:9px;vertical-align:top;padding:6px 8px;border:1px solid #ccc;text-align:center">${e.date}</td>
     </tr>`).join('');
 
-  const reportHTML=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>ESC Report ${num} - ${proj}</title>
+  const tableSection = (title, color, rows) => rows ? `
+    <div style="margin-top:16px">
+      <div style="background:${color};color:white;padding:6px 10px;font-size:11px;font-weight:700;border-radius:4px 4px 0 0">${title}</div>
+      <table style="width:100%;border-collapse:collapse">
+        <thead><tr style="background:#f5f5f5">
+          <th style="padding:5px 8px;text-align:left;font-size:9px;border:1px solid #ccc">Actividades realizadas / Activities Performed</th>
+          <th style="padding:5px 8px;text-align:left;font-size:9px;border:1px solid #ccc">Descripción (ES)</th>
+          <th style="padding:5px 8px;text-align:left;font-size:9px;border:1px solid #ccc">Description (EN)</th>
+          <th style="padding:5px 8px;text-align:left;font-size:9px;border:1px solid #ccc">Photo report</th>
+          <th style="padding:5px 8px;text-align:left;font-size:9px;border:1px solid #ccc">Date</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>` : '';
+
+  const reportHTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>ESC+IAQ Report ${num}</title>
   <style>
-    body{font-family:Arial,sans-serif;margin:0;padding:20px;font-size:11px;color:#1a1a1a}
+    body{font-family:Arial,sans-serif;margin:0;padding:20px;font-size:11px}
     .header{background:#1D5C3E;color:white;padding:14px 18px;border-radius:6px 6px 0 0;display:flex;justify-content:space-between;align-items:flex-start}
-    .header h1{font-size:15px;margin:0 0 2px;color:white}
+    .header h1{font-size:14px;margin:0 0 2px;color:white}
     .header p{font-size:10px;margin:0;opacity:0.85}
-    .header .brand{font-size:13px;font-weight:700;color:white;opacity:0.9}
     table.meta{width:100%;border-collapse:collapse;border:1px solid #ccc;border-top:none}
     table.meta td{padding:5px 10px;border:1px solid #ccc;font-size:10px}
     table.meta .lbl{background:#f5f7f5;font-weight:700;width:130px}
-    table.main{width:100%;border-collapse:collapse;margin-top:14px}
-    table.main th{background:#1D5C3E;color:white;padding:6px 8px;text-align:left;font-size:10px;font-weight:600}
-    .corrective{margin-top:12px;border:1px solid #ccc;border-radius:4px;padding:10px;font-size:10px}
+    .corrective{margin-top:14px;border:1px solid #ccc;border-radius:4px;padding:10px;font-size:10px}
     .corrective strong{display:block;margin-bottom:4px}
     .footer{margin-top:10px;font-size:9px;color:#888;text-align:right}
-    @media print{body{padding:10px}@page{margin:15mm}}
+    @media print{body{padding:10px}@page{margin:12mm}}
   </style></head><body>
   <div class="header">
     <div>
-      <p style="font-size:9px;opacity:0.75;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.05em">Sustainable Sites</p>
-      <h1>Construction Activity Pollution Prevention Prerequisite</h1>
-      <p>ESC Monthly Report</p>
+      <p style="font-size:9px;opacity:0.75;margin-bottom:2px;text-transform:uppercase;letter-spacing:0.05em">Sustainable Sites + Indoor Environmental Quality</p>
+      <h1>Construction Activity Pollution Prevention + Indoor Air Quality Management Plan</h1>
+      <p>ESC + IAQ Monthly Report</p>
     </div>
-    <div class="brand">THREE</div>
+    <div style="font-size:13px;font-weight:700;color:white;opacity:0.9">${empresa}</div>
   </div>
   <table class="meta"><tr>
     <td class="lbl">Report Number:</td><td>${num}</td>
@@ -351,30 +542,38 @@ function downloadReport(){
     <td class="lbl">Project:</td><td colspan="3">${proj}</td>
     <td class="lbl">Frequency:</td><td>${freq}</td>
   </tr></table>
-  <table class="main"><thead><tr>
-    <th>Actividades realizadas</th><th>Descripción (ES)</th><th>Description (EN)</th><th>Photo report</th><th>Date</th>
-  </tr></thead><tbody>${rows}</tbody></table>
-  <div class="corrective"><strong>Corrective Actions / Acciones Correctivas:</strong>${corrective}</div>
+  ${tableSection('CAPP — Construction Activity Pollution Prevention', '#1D5C3E', makeRows(cappEntries))}
+  ${tableSection('CIAQMP — Construction Indoor Air Quality Management Plan', '#1E3A5F', makeRows(ciaqEntries))}
+  <div class="corrective"><strong>Corrective Actions / Acciones Correctivas:</strong><br>${corrective}</div>
   <div class="footer">* Full size images can also be found on the credit uploads</div>
   <script>window.onload=function(){window.print();}<\/script>
   </body></html>`;
 
-  const blob=new Blob([reportHTML],{type:'text/html'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;
-  a.download='ESC_Report_'+proj.replace(/\s+/g,'_')+'_No'+num+'.html';
-  document.body.appendChild(a);
-  a.click();
+  const blob = new Blob([reportHTML],{type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href=url; a.download=`ESC_IAQ_Report_${proj.replace(/\s+/g,'_')}_No${num}.html`;
+  document.body.appendChild(a); a.click();
   document.body.removeChild(a);
   setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 
 function resetAll(){
   if(confirm('¿Iniciar reporte nuevo? Se borrarán todas las entradas.')){
-    entries=[];updateCounter();showScreen('screen-home');
+    entries=[];
+    localStorage.removeItem('esc_entries');
+    updateCounter();
+    showScreen('screen-home');
   }
 }
+
+// Init
+loadFromStorage();
+updateCounter();
+['empresa','proj-name','report-num','elaborado-por','frecuencia'].forEach(id=>{
+  document.getElementById(id).addEventListener('change', saveToStorage);
+  document.getElementById(id).addEventListener('input', saveToStorage);
+});
 </script>
 </body>
 </html>
