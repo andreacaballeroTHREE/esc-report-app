@@ -28,7 +28,10 @@ textarea{height:72px;resize:none}
 .section-label.obligatorio{background:#EBF4FF;color:#1E40AF}
 .section-label.opcional{background:#f0f2f0;color:#555}
 .concept-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px}
-.concept-btn{border:1.5px solid #e5e7e5;border-radius:10px;padding:11px 8px;text-align:center;cursor:pointer;font-size:11.5px;line-height:1.4;font-family:inherit;font-weight:500}
+.concept-btn{border:1.5px solid #e5e7e5;border-radius:10px;padding:11px 8px;text-align:center;cursor:pointer;font-size:11.5px;line-height:1.4;font-family:inherit;font-weight:500;position:relative}
+.concept-btn.done{border-color:#1D9E75;box-shadow:inset 0 0 0 1px #1D9E75}
+.concept-check{position:absolute;top:5px;right:5px;width:16px;height:16px;background:#1D9E75;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.concept-check svg{width:10px;height:10px;color:#fff}
 .concept-btn.obligatorio{background:#EBF4FF;border-color:#BFDBFE;color:#1E40AF}
 .concept-btn.opcional{background:#fff;color:#1a1a1a}
 .concept-btn:active{opacity:0.7}
@@ -51,6 +54,7 @@ textarea{height:72px;resize:none}
 .badge.ciaqmp{background:#EBF4FF;color:#1E40AF}
 .topbar{display:flex;align-items:center;gap:10px;margin-bottom:1.5rem}
 .back-btn{background:#fff;border:1px solid #e5e7e5;border-radius:8px;cursor:pointer;color:#555;font-size:20px;padding:6px 8px;line-height:1;display:flex}
+.back-btn svg{width:20px;height:20px}
 .step-indicator{font-size:12px;color:#888;margin-bottom:1px}
 .divider{height:1px;background:#e5e7e5;margin:1rem 0}
 .empty-state{text-align:center;padding:2.5rem 1rem;color:#888;font-size:14px}
@@ -81,11 +85,6 @@ textarea{height:72px;resize:none}
   <h1>Reporte ESC + IAQ</h1>
   <p style="font-size:14px;color:#777;margin-bottom:16px">Construction Activity Pollution Prevention<br>+ Indoor Air Quality Management Plan</p>
 
-  <div class="instrucciones">
-    <div class="legend-dot"><div class="dot-blue"></div> Obligatorio — incluir en cada reporte</div>
-    <div class="legend-dot"><div class="dot-white"></div> Incluir cuando aplique a la etapa del proyecto</div>
-  </div>
-
   <div class="card">
     <label>Nombre de empresa</label>
     <input type="text" id="empresa" placeholder="Nombre de la empresa" />
@@ -97,9 +96,9 @@ textarea{height:72px;resize:none}
     <input type="text" id="elaborado-por" placeholder="Nombre completo" />
     <label>Frecuencia</label>
     <select id="frecuencia">
-      <option value="Once per week">Once per week</option>
-      <option value="Twice per week">Twice per week</option>
-      <option value="Once per month">Once per month</option>
+      <option value="Una vez por semana">Una vez por semana</option>
+      <option value="Dos veces por semana">Dos veces por semana</option>
+      <option value="Una vez al mes">Una vez al mes</option>
     </select>
   </div>
   <button class="btn btn-primary" onclick="goToCapture()"><i class="ti ti-arrow-right"></i>Iniciar captura de evidencia</button>
@@ -109,14 +108,14 @@ textarea{height:72px;resize:none}
 <!-- CONCEPTS -->
 <div id="screen-concepts" class="screen">
   <div class="topbar">
-    <button class="back-btn" onclick="showScreen('screen-home')"><i class="ti ti-arrow-left"></i></button>
+    <button class="back-btn" onclick="showScreen('screen-home')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
     <div>
       <div class="step-indicator">Captura de evidencia</div>
       <h2 style="margin-bottom:0">¿Qué vas a fotografiar?</h2>
     </div>
   </div>
 
-  <div class="section-label obligatorio"><i class="ti ti-circle-filled" style="font-size:9px;margin-right:4px"></i>CAPP — Obligatorios</div>
+  <div class="section-label obligatorio"><i class="ti ti-circle-filled" style="font-size:9px;margin-right:4px"></i>CAPP - Se debe incluir evidencia en cada reporte</div>
   <div class="concept-grid" id="grid-capp-oblig"></div>
 
   <div class="section-label opcional" style="margin-top:8px">CAPP — Cuando aplique</div>
@@ -138,19 +137,18 @@ textarea{height:72px;resize:none}
 <!-- PHOTO -->
 <div id="screen-photo" class="screen">
   <div class="topbar">
-    <button class="back-btn" onclick="showScreen('screen-concepts')"><i class="ti ti-arrow-left"></i></button>
+    <button class="back-btn" onclick="showScreen('screen-concepts')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
     <div>
       <div class="step-indicator">Toma de evidencia</div>
       <h2 id="photo-screen-title" style="margin-bottom:0">Toma la foto</h2>
     </div>
   </div>
   <div class="badge" id="selected-concept-badge"></div>
+  <div class="card" id="concept-desc-box" style="padding:12px 14px;margin-bottom:14px"><p style="font-size:13px;color:#444;line-height:1.5;margin:0" id="concept-desc-text"></p></div>
   <div id="photo-preview"><img id="preview-img" /><div class="ts-badge" id="ts-badge-text"></div></div>
   <input type="file" id="file-input" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(event)" />
   <button class="btn btn-primary" onclick="document.getElementById('file-input').click()" id="photo-btn"><i class="ti ti-camera"></i>Tomar foto</button>
   <div id="notes-section" style="display:none;margin-top:14px">
-    <label>Nota adicional (opcional)</label>
-    <textarea id="extra-note" placeholder="Observación o acción correctiva..."></textarea>
     <button class="btn btn-primary" id="save-entry-btn" onclick="saveEntry()"><i class="ti ti-check"></i>Guardar y continuar</button>
   </div>
 </div>
@@ -158,7 +156,7 @@ textarea{height:72px;resize:none}
 <!-- CUSTOM -->
 <div id="screen-custom" class="screen">
   <div class="topbar">
-    <button class="back-btn" onclick="showScreen('screen-concepts')"><i class="ti ti-arrow-left"></i></button>
+    <button class="back-btn" onclick="showScreen('screen-concepts')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
     <h2 style="margin-bottom:0">Concepto personalizado</h2>
   </div>
   <div class="card">
@@ -182,7 +180,7 @@ textarea{height:72px;resize:none}
 <!-- REVIEW -->
 <div id="screen-review" class="screen">
   <div class="topbar">
-    <button class="back-btn" onclick="goToCapture()"><i class="ti ti-arrow-left"></i></button>
+    <button class="back-btn" onclick="goToCapture()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
     <h2 style="margin-bottom:0">Entradas del reporte</h2>
   </div>
   <div id="entries-list"></div>
@@ -193,7 +191,7 @@ textarea{height:72px;resize:none}
 <!-- REPORT PREVIEW -->
 <div id="screen-report" class="screen">
   <div class="topbar">
-    <button class="back-btn" onclick="showScreen('screen-review')"><i class="ti ti-arrow-left"></i></button>
+    <button class="back-btn" onclick="showScreen('screen-review')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
     <h2 style="margin-bottom:0">Vista previa</h2>
   </div>
   <div class="card" id="report-meta-preview"></div>
@@ -321,7 +319,9 @@ function renderConcepts(){
     // CIAQMP has no obligatorios — all go to opcional
     const planKey = c.plan==='CAPP' ? 'capp' : 'ciaq';
     const key = planKey + '-' + (c.plan==='CAPP' && c.oblig ? 'oblig' : 'opt');
-    if(grids[key]) grids[key].innerHTML += `<button class="concept-btn ${cls}" onclick="selectConcept('${c.id}')"><i class="ti ${c.icon}"></i>${c.es}</button>`;
+    const isDone = entries.some(e => e.concept.id === c.id);
+    const checkIcon = isDone ? '<span class="concept-check"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>' : '';
+    if(grids[key]) grids[key].innerHTML += `<button class="concept-btn ${cls} ${isDone?'done':''}" onclick="selectConcept('${c.id}')">${checkIcon}<i class="ti ${c.icon}"></i>${c.es}</button>`;
   });
 }
 
@@ -349,10 +349,10 @@ function openPhotoScreen(){
   const badge = document.getElementById('selected-concept-badge');
   badge.textContent = selectedConcept.plan + ' · ' + selectedConcept.es;
   badge.className = 'badge ' + selectedConcept.plan.toLowerCase();
+  document.getElementById('concept-desc-text').textContent = selectedConcept.desc_es;
   document.getElementById('photo-preview').style.display='none';
   document.getElementById('notes-section').style.display='none';
   document.getElementById('photo-btn').innerHTML='<i class="ti ti-camera"></i>Tomar foto';
-  document.getElementById('extra-note').value='';
   const saveBtn = document.getElementById('save-entry-btn');
   saveBtn.disabled = false;
   saveBtn.innerHTML = '<i class="ti ti-check"></i>Guardar y continuar';
@@ -412,12 +412,11 @@ function saveEntry(){
   // cierra el teclado virtual de inmediato para que el cambio de pantalla se vea sin demora
   if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
 
-  const note = document.getElementById('extra-note').value.trim();
   const now = currentTimestamp || new Date();
   const pad = n=>String(n).padStart(2,'0');
   const dateStr = `${pad(now.getMonth()+1)}/${pad(now.getDate())}/${now.getFullYear()}`;
   const tsStr = `${pad(now.getDate())}/${pad(now.getMonth()+1)}/${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
-  entries.push({concept:selectedConcept, photo:currentPhotoData, date:dateStr, timestamp:tsStr, note});
+  entries.push({concept:selectedConcept, photo:currentPhotoData, date:dateStr, timestamp:tsStr, note:''});
   saveToStorage();
   updateCounter();
   showScreen('screen-concepts');
@@ -575,7 +574,7 @@ function downloadReport(){
   ${tableSection('CAPP — Construction Activity Pollution Prevention', '#1D5C3E', makeRows(cappEntries))}
   ${tableSection('CIAQMP — Construction Indoor Air Quality Management Plan', '#1E3A5F', makeRows(ciaqEntries))}
   <div class="corrective"><strong>Corrective Actions / Acciones Correctivas:</strong><br>${corrective}</div>
-  <div class="footer">* Full size images can also be found on the credit uploads</div>
+  <div class="footer"></div>
   <script>window.onload=function(){window.print();}<\/script>
   </body></html>`;
 
